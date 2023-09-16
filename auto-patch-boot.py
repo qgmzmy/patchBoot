@@ -22,11 +22,14 @@ def main():
     os.system("adb shell /data/local/tmp/magisk/boot_patch.sh boot.img")
     os.system("adb pull /data/local/tmp/magisk/new-boot.img " + outputPath)
     
-    if args.patched_boot_path:
+    if args.patched_boot_path and outputPath == "./":
         os.system("adb reboot bootloader")
         os.system("ping>nul 2>nul localhost")
         os.system("fastboot flash boot new-boot.img")
         os.system("fastboot reboot")
+    else:
+        print('''
+if you want to flash the boot image, please do not modify the value of --output''')
 
 if __name__ == '__main__':
     main()
